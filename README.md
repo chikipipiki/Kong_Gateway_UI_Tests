@@ -1,1 +1,0 @@
-# Kong_Gateway_UI_Tests
