@@ -29,19 +29,20 @@ export class CreateServicePage extends BasePage {
         this.submitButton = this.me.getByTestId("service-create-form-submit");
     }
 
-    async submitAndStore() {
-        await this.submitButton.click();
+    async submitAndStore(): Promise<Service> {
+        const [response] = await Promise.all([
+            this.page.waitForResponse(
+                (res) =>
+                    res.url().includes("/default/services") &&
+                    res.request().method() === "POST"
+            ),
+            this.submitButton.click(),
+        ]);
 
-        await this.page.route("*/**/default/services", async (route, req) => {
-            if (req.method() === "POST") {
-                const response = await route.fetch();
-                const service = Object.assign(
-                    new Service(),
-                    await response.json()
-                );
-                this.bag.services.push(service);
-                await route.fulfill({ response });
-            }
-        });
+        const responseBody = await response.json();
+        const service = Object.assign(new Service(), responseBody);
+        this.bag.services.push(service);
+
+        return service;
     }
 }

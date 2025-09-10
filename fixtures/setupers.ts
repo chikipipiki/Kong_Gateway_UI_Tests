@@ -6,6 +6,7 @@ export interface Bag {
     ui_url: string;
     api_url: string;
     services: Service[];
+    routes: object[];
 }
 
 interface Setupers {
@@ -21,6 +22,7 @@ export const test = base.extend<Setupers>({
                 ui_url: "http://localhost:8002",
                 api_url: "http://localhost:8001",
                 services: [],
+                routes: [],
             };
 
             await use(bag);

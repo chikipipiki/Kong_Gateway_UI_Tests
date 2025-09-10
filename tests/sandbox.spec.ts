@@ -5,4 +5,14 @@ test.describe("sandbox", () => {
         const service = await api_helper.CreateService();
         expect(await api_helper.GetService(service.id)).toBe(200);
     });
+
+    test("remove all services", async ({ api_helper }) => {
+        const res = await api_helper.GetServices();
+
+        console.log(res.data);
+
+        for (const s of res.data) {
+            await api_helper.DeleteService(s.id);
+        }
+    });
 });

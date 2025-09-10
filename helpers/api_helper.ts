@@ -19,11 +19,19 @@ export class ApiHelper {
         });
     }
 
-    async GetService(id: string): Promise<number> {
+    async GetService(id: string): Promise<Service> {
         const request = await this.CreateContext();
         const response = await request.get(`default/services/${id}`);
 
-        return response.status();
+        const service = Object.assign(new Service(), await response.json());
+        return service;
+    }
+
+    async GetServices(): Promise<any> {
+        const request = await this.CreateContext();
+        const response = await request.get(`default/services`);
+
+        return await response.json();
     }
 
     async CreateService(): Promise<Service> {
