@@ -1,8 +1,10 @@
 import { test, expect } from "../fixtures/poms";
+import { RouteModel } from "../models/route";
 import { ServiceModel } from "../models/service";
+import expectedResult from "./test_result.json";
 
 test("e2e - workflow - add service + route", async ({
-    bag,
+    api_helper,
     Workspace: {
         Overview: overview,
         GatewayServices: services,
@@ -28,10 +30,13 @@ test("e2e - workflow - add service + route", async ({
     await service_page.routesButton.click();
     await service_page.newRouteButton.click();
 
-    await create_route.nameTextbox.fill("teeeeee");
-    await create_route.pathTextbox.fill("/api/testttt");
-    await create_route.selectMethods(["GET", "POST", "DELETE"]);
-    await create_route.hostTextbox.fill("a.com");
+    const routeModel = new RouteModel("localhost");
+    await create_route.fillForm(routeModel);
+    const route = await create_route.submitAndStore();
 
-    await create_route.submitAndStore();
+    await expect(
+        service_page.page.locator(`[data-rowid="${route["id"]}"]`)
+    ).toBeVisible();
+
+    expect(await api_helper.CheckRoute(route)).toEqual(expectedResult);
 });

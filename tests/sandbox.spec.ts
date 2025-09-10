@@ -1,3 +1,4 @@
+import { request } from "@playwright/test";
 import { test, expect } from "../fixtures/poms";
 
 test.describe("sandbox", () => {
@@ -8,8 +9,6 @@ test.describe("sandbox", () => {
 
     test("remove all services", async ({ api_helper }) => {
         const res = await api_helper.GetServices();
-
-        console.log(res.data);
 
         for (const s of res.data) {
             await api_helper.DeleteService(s.id);

@@ -9,6 +9,7 @@ import { GatewayServicesPage } from "../page_objects/gateway_services_page";
 import { WorkspaceOverviewPage } from "../page_objects/workspace_overview_page";
 import { ServicePage } from "../page_objects/service_page";
 import { CreateRoutePage } from "../page_objects/create_route_page";
+import { RoutePage } from "../page_objects/route_page";
 
 interface PageObjectFixtures {
     Workspace: {
@@ -17,6 +18,7 @@ interface PageObjectFixtures {
         CreateService: CreateServicePage;
         Service: ServicePage;
         CreateRoute: CreateRoutePage;
+        Route: RoutePage;
     };
     Navigation: NavMenu;
     Notifier: Notifier;
@@ -29,6 +31,7 @@ export const test = base.extend<PageObjectFixtures>({
         const create_service = new CreateServicePage(bag, page);
         const service = new ServicePage(bag, page);
         const create_route = new CreateRoutePage(bag, page);
+        const route = new RoutePage(bag, page);
 
         await use({
             Overview: overview,
@@ -36,6 +39,7 @@ export const test = base.extend<PageObjectFixtures>({
             CreateService: create_service,
             Service: service,
             CreateRoute: create_route,
+            Route: route,
         });
     },
 

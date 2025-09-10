@@ -13,6 +13,8 @@ export class CreateServicePage extends BasePage {
 
     readonly submitButton: Locator;
 
+    readonly formErrorTextbox: Locator;
+
     constructor(bag: Bag, page: Page) {
         super(bag, page);
         this.path = `/${this.workspace_name}/services/create`;
@@ -27,6 +29,8 @@ export class CreateServicePage extends BasePage {
         this.nameTextbox = this.me.getByTestId("gateway-service-name-input");
 
         this.submitButton = this.me.getByTestId("service-create-form-submit");
+
+        this.formErrorTextbox = this.me.getByTestId("form-error");
     }
 
     async submitAndStore(): Promise<Service> {
