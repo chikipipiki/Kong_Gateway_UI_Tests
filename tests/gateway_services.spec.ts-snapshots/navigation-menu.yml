@@ -1,0 +1,52 @@
+- navigation "Main menu":
+  - list:
+    - listitem:
+      - link "Workspaces default" [expanded]:
+        - /url: /workspaces
+        - img
+      - list:
+        - listitem:
+          - link "Overview":
+            - /url: /default/overview
+        - listitem:
+          - link "Gateway Services":
+            - /url: /default/services
+        - listitem:
+          - link "Routes":
+            - /url: /default/routes
+        - listitem:
+          - link "Consumers":
+            - /url: /default/consumers
+        - listitem:
+          - link "Plugins":
+            - /url: /default/plugins
+        - listitem:
+          - link "Redis Configurations":
+            - /url: /default/redis-configurations
+        - listitem:
+          - link "Upstreams":
+            - /url: /default/upstreams
+        - listitem:
+          - link "Certificates":
+            - /url: /default/certificates
+        - listitem:
+          - link "SNIs":
+            - /url: /default/snis
+        - listitem:
+          - link "Keys":
+            - /url: /default/keys
+        - listitem:
+          - link "Vaults":
+            - /url: /default/vaults
+    - listitem:
+      - link "Teams":
+        - /url: /teams
+        - img
+    - listitem:
+      - link "Dev Portal (Konnect)":
+        - /url: /portal
+        - img
+    - listitem:
+      - link "Analytics (Konnect)":
+        - /url: /analytics
+        - img
