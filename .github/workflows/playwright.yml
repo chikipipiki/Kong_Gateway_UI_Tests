@@ -26,7 +26,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       if: always() # Deploy even if tests fail
       with:
-        #github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: playwright-report # The directory containing your HTML report
         publish_branch: main # The branch for GitHub Pages
     # - uses: actions/upload-artifact@v4
