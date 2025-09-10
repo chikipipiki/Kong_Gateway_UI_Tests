@@ -16,8 +16,8 @@ interface PageObjectFixtures {
 
 export const test = base.extend<PageObjectFixtures>({
     Workspace: async ({ bag, page }, use) => {
-        const overview = new WorkspaceOverviewPage(bag.ui_url, page);
-        const create_service = new CreateServicePage(bag.ui_url, page);
+        const overview = new WorkspaceOverviewPage(bag, page);
+        const create_service = new CreateServicePage(bag, page);
 
         await use({ Overview: overview, Createservice: create_service });
     },
