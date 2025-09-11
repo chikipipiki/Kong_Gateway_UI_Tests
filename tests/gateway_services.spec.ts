@@ -61,3 +61,44 @@ test("service URL validation", async ({
     ).toBeVisible();
     await expect(create_service.submitButton).toBeDisabled();
 });
+
+test("edit service", async ({
+    api_helper,
+    page,
+    Workspace: { GatewayServices: services },
+}) => {
+    const init_service = await api_helper.CreateService();
+
+    await services.goto();
+
+    await services.startEditingService(init_service.id);
+
+    await expect(page).toHaveURL(
+        new RegExp(`services/${init_service.id}/update`)
+    );
+
+    //ideally this needs to be moved to POM
+    await expect(page.getByTestId("service-edit-form-submit")).toBeDisabled();
+});
+
+test("delete service", async ({
+    api_helper,
+    Workspace: { GatewayServices: services },
+}) => {
+    const init_service = await api_helper.CreateService();
+
+    await services.goto();
+
+    await services.startDeletingService(init_service.id);
+    await expect(services.modal.me).toBeVisible();
+
+    await services.modal.confirmationTextbox.fill(init_service.name);
+    await services.modal.actionButton.click();
+
+    await expect(services.modal.me).toBeVisible({ visible: false });
+
+    //ideally this needs to be moved to POM
+    const serv = await api_helper.GetService(init_service.id);
+
+    expect(serv.message).toBe("Not found");
+});
