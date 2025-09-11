@@ -26,3 +26,11 @@ test("create route", async ({
         expect(route_page.nameTextbox).toHaveText(routeModel.name),
     ]);
 });
+
+/* 
+Other tests that should be included:
+- update route
+- delete route
+- create route validations
+- create multiple routes for service
+*/
