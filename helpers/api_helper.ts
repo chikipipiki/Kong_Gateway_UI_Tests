@@ -1,6 +1,7 @@
 import { APIRequestContext, request } from "@playwright/test";
 import { Bag } from "../fixtures/setupers";
 import { Service, ServiceModel } from "../models/service";
+import path from "path";
 
 export class ApiHelper {
     protected bag: Bag;
@@ -19,11 +20,19 @@ export class ApiHelper {
         });
     }
 
-    async GetService(id: string): Promise<number> {
+    async GetService(id: string): Promise<Service> {
         const request = await this.CreateContext();
         const response = await request.get(`default/services/${id}`);
 
-        return response.status();
+        const service = Object.assign(new Service(), await response.json());
+        return service;
+    }
+
+    async GetServices(): Promise<any> {
+        const request = await this.CreateContext();
+        const response = await request.get(`default/services`);
+
+        return await response.json();
     }
 
     async CreateService(): Promise<Service> {
@@ -53,5 +62,30 @@ export class ApiHelper {
         if (response.status() != 204) {
             console.log(`something went wronmg: ${response.statusText()}`);
         }
+    }
+
+    async DeleteRoute(id: string): Promise<void> {
+        const request = await this.CreateContext();
+
+        const response = await request.delete(`default/routes/${id}`);
+
+        if (response.status() != 204) {
+            console.log(`something went wronmg: ${response.statusText()}`);
+        }
+    }
+
+    async CheckRoute(route: object): Promise<object> {
+        //quick and dirty solution
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+
+        const context = await request.newContext({
+            //can construct from object
+            baseURL: "http://localhost:8000",
+        });
+
+        const paht = `${route["paths"][0]}`.slice(1);
+        const response = await context.get(paht);
+
+        return await response.json();
     }
 }

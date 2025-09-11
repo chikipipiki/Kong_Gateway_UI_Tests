@@ -1,0 +1,13 @@
+- text: Summary Services
+- button:
+  - img
+- text: /\d+ Routes/
+- button:
+  - img
+- text: /\d+ Consumers/
+- button:
+  - img
+- text: /\d+ Plugins/
+- button:
+  - img
+- text: "0"

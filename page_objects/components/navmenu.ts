@@ -8,6 +8,6 @@ export class NavMenu {
     }
 
     button(name: string): Locator {
-        return this.me.getByRole("button", { name: name });
+        return this.me.getByRole("link", { name: name });
     }
 }

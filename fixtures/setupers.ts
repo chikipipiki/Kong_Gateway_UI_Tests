@@ -6,6 +6,8 @@ export interface Bag {
     ui_url: string;
     api_url: string;
     services: Service[];
+    //oversimplified version, can be implemented the same way as Services
+    routes: object[];
 }
 
 interface Setupers {
@@ -21,6 +23,7 @@ export const test = base.extend<Setupers>({
                 ui_url: "http://localhost:8002",
                 api_url: "http://localhost:8001",
                 services: [],
+                routes: [],
             };
 
             await use(bag);
@@ -35,6 +38,10 @@ export const test = base.extend<Setupers>({
     tear_down: [
         async ({ bag, api_helper }, use) => {
             await use();
+
+            for (const route of bag.routes) {
+                if (route["id"]) await api_helper.DeleteRoute(route["id"]);
+            }
 
             for (const service of bag.services) {
                 if (service.id) await api_helper.DeleteService(service.id);

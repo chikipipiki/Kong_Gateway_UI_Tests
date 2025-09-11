@@ -64,4 +64,6 @@ export class Service implements ServiceBase {
 
     ca_certificates: null;
     client_certificate: null;
+
+    message: string | undefined;
 }
