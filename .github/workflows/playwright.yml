@@ -38,3 +38,6 @@ jobs:
         publish_dir: playwright-report
         publish_branch: gh-pages
         keep_files: false
+
+    - name: Start Docker containers
+      run: docker compose down

@@ -1,4 +1,3 @@
-import { request } from "@playwright/test";
 import { test, expect } from "../fixtures/poms";
 
 test.describe("sandbox", () => {

@@ -62,10 +62,11 @@ test("service URL validation", async ({
     await expect(create_service.submitButton).toBeDisabled();
 });
 
+//unpolished
 test("edit service", async ({
     api_helper,
     page,
-    Workspace: { GatewayServices: services },
+    Workspace: { GatewayServices: services, Service: service_page },
 }) => {
     const init_service = await api_helper.CreateService();
 
@@ -79,6 +80,18 @@ test("edit service", async ({
 
     //ideally this needs to be moved to POM
     await expect(page.getByTestId("service-edit-form-submit")).toBeDisabled();
+
+    await page.getByTestId("gateway-service-host-input").fill("example.com");
+    await page.getByTestId("gateway-service-name-input").fill("new");
+
+    await page.getByTestId("service-edit-form-submit").click();
+
+    await expect(service_page.nameTextbox).toBeVisible();
+    await expect(service_page.nameTextbox).toHaveText("new");
+
+    const serv = await api_helper.GetService(init_service.id);
+    expect(serv.name).toBe("new");
+    expect(serv.host).toBe("example.com");
 });
 
 test("delete service", async ({

@@ -1,11 +1,8 @@
 import { test, expect } from "../fixtures/poms";
 
-test("check page content", async ({
-    page,
-    Workspace: { Overview: overview },
-}) => {
+test("check page content", async ({ Workspace: { Overview: overview } }) => {
     await overview.goto();
-    await expect(page).toHaveURL(/default\/overview/);
+    await expect(overview.page).toHaveURL(/default\/overview/);
 });
 
 test("check nav menu links", async ({
