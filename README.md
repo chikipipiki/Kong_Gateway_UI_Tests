@@ -1,66 +1,120 @@
-# Kong_Gateway_UI_Tests
+# Kong Gateway UI Tests
 
-## Getting started
+Automated end-to-end and integration tests for Kong Gateway Manager UI using [Playwright](https://playwright.dev/).
 
-To run/develop tests:
+---
 
-- Install the latest stable version of [Node.js](https://nodejs.org/en)
-- Clone this repository
-- Restore libraries
+## Getting Started
 
-## Restoring playwright-test libraries
+### Prerequisites
 
-All dependencies already exist in package.json, to restore them:
+- [Node.js](https://nodejs.org/en) (latest LTS recommended)
+- [Docker](https://www.docker.com/) (for running Kong and dependencies)
 
-```shell
-npm ci
-#to install browsers on local machine
-npx playwright install
-```
+### Setup
 
-## Running tests
+1. **Clone the repository:**
 
-[To run tests in various modes:](https://playwright.dev/docs/running-tests)
+    ```sh
+    git clone https://github.com/chikipipiki/Kong_Gateway_UI_Tests.git
+    cd Kong_Gateway_UI_Tests
+    ```
 
-```shell
-#run in default mode (will run all "projects" in headless mode)
-npx playwright test
+2. **Install dependencies:**
 
-#open playwright ui to run/debug tests
-npx playwright test --ui
+    ```sh
+    npm ci
+    ```
 
-#show report
-npx playwright show-report
-```
+3. **Install Playwright browsers (local development):**
 
-## Overview
+    ```sh
+    npx playwright install
+    ```
 
-This project is more a proof of concept than complete testing framwork.
+4. **Start Kong Gateway and dependencies:**
+    ```sh
+    docker compose up -d
+    ```
 
-I followed some ideas:
+---
 
-- granular tests
-- page object models
--
+## Running Tests
 
-## tests
+- **Run all tests (headless, all browsers):**
 
-e2e:
+    ```sh
+    npx playwright test
+    ```
 
-- open Kong Manager
-- go to default workspace
-- go to services tab
-- add new service
-- go to service routes
-- add new route
-- send api request to sevice's route and verify response
+- **Open Playwright UI for interactive running/debugging:**
 
-granular:
+    ```sh
+    npx playwright test --ui
+    ```
 
-- check navigation menu links
+- **Show HTML report:**
+    ```sh
+    npx playwright show-report
+    ```
 
-- create service
+---
 
-- service validations:
-    - invalid url
-    - duplicate name
+## Project Structure
+
+- `tests/` - Test specs (e2e, granular, UI content)
+- `page_objects/` - Page Object Models (POMs) for UI abstraction
+- `models/` - Data models for test entities (Service, Route, etc.)
+- `helpers/` - API helpers and utilities
+- `fixtures/` - Playwright fixtures for setup/teardown and POM wiring
+- `playwright.config.ts` - Playwright configuration
+- `docker-compose.yml` - Kong Gateway and Postgres setup for local testing
+
+---
+
+## Test Types
+
+### E2E Workflow
+
+- Open Kong Manager
+- Navigate to default workspace
+- Go to Services tab
+- Add a new service
+- Go to service routes
+- Add a new route
+- Send API request to the service's route and verify the response
+
+### Granular Tests
+
+- Check navigation menu links
+- Check overview card contents
+- Create service
+- Edit service
+- Delete service
+- Create service validations:
+    - Invalid URL
+    - Duplicate name
+- Create route
+
+---
+
+## CI Integration
+
+Tests are automatically run on pushes and pull requests to the `dev` branch via [GitHub Actions](.github/workflows/playwright.yml). Reports are published to [GitHub Pages](https://chikipipiki.github.io/Kong_Gateway_UI_Tests/).
+
+---
+
+## Resources
+
+- [Playwright Documentation](https://playwright.dev/docs/intro)
+- [Fixtures in Playwright](https://playwright.dev/docs/test-fixtures)
+
+---
+
+## Notes
+
+- This project is a proof of concept and not a complete testing framework.
+- Page Object Model (POM) pattern is used for maintainability.
+- Test data is generated using [faker](https://www.npmjs.com/package/@faker-js/faker).
+
+---

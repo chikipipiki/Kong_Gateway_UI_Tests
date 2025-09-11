@@ -110,7 +110,6 @@ test("delete service", async ({
 
     await expect(services.modal.me).toBeVisible({ visible: false });
 
-    //ideally this needs to be moved to POM
     const serv = await api_helper.GetService(init_service.id);
 
     expect(serv.message).toBe("Not found");

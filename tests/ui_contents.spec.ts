@@ -1,8 +1,14 @@
 import { test, expect } from "../fixtures/poms";
 
-test("check page content", async ({ Workspace: { Overview: overview } }) => {
+// Showcase of snapshot testing for UI contents
+test("check overview card content", async ({
+    Workspace: { Overview: overview },
+}) => {
     await overview.goto();
     await expect(overview.page).toHaveURL(/default\/overview/);
+    await expect(overview.card).toMatchAriaSnapshot({
+        name: "overview_card.yml",
+    });
 });
 
 test("check nav menu links", async ({
